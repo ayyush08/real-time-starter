@@ -9,6 +9,14 @@ const App = () => {
   const [room,setRoom] = useState("");
   const [socketId,setSocketId] = useState("");
   const [messages,setMessages] = useState([]);
+  const [roomName,setRoomName] = useState("");
+
+  const joinRoomHandler = (e)=>{
+    e.preventDefault();
+    socket.emit("join-room",roomName);
+    setRoomName("");
+  }
+
   const handleSubmit = (e)=>{
     e.preventDefault();
     socket.emit("message",{message,room});
@@ -25,7 +33,7 @@ const App = () => {
       console.log(data);
     })
     socket.on("receive-message",(data)=>{
-      setMessages([...messages,data]);
+      setMessages((messages)=>[...messages,data]);
 
     })
     return ()=>{
@@ -39,6 +47,17 @@ const App = () => {
       <Typography variant='h4' component='div' gutterBottom>
         {socket.id}
       </Typography>
+
+     <form onSubmit={joinRoomHandler}>
+      <h5>Join Room</h5>
+      <TextField
+    value={roomName}
+    onChange={(e)=>setRoomName(e.target.value)}
+    id='outlined-basic' 
+    label='Room Name'
+    variant='outlined'/>
+    <Button type='submit' variant='contained' color='primary'>Join</Button>
+     </form>
     <form onSubmit={handleSubmit}>
     <TextField
     value={message}

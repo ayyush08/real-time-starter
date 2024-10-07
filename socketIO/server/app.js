@@ -23,7 +23,13 @@ io.on("connection",(socket)=>{
 
     socket.on("message",(data)=>{
         console.log(socket.id," " , data);
-        socket.to(data.room).emit("receive-message",data.message);
+        socket.to(data.room).emit("receive-message",data.message);//can use io too,no issues
+    })
+
+
+    socket.on("join-room",(room)=>{
+        socket.join(room);
+        console.log(`User ${socket.id} has joined room ${room}`);
     })
 
     socket.on("disconnect",()=>{
