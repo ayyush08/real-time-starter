@@ -1,0 +1,15 @@
+{
+  "name": "web-sockets-starter",
+  "version": "1.0.0",
+  "description": "This repository serves as a learning purpose for web sockets in my coding odyssey.  This project serves as a learning resource for understanding WebSockets, including establishing connections, sending/receiving messages, and handling client disconnections.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "websocket": "^1.0.35"
+  }
+}
