@@ -22,8 +22,8 @@ io.on("connection",(socket)=>{
     // socket.broadcast.emit("welcome",`User ${socket.id} has joined the chat`);
 
     socket.on("message",(data)=>{
-        console.log(data);
-        
+        console.log(socket.id," " , data);
+        socket.to(data.room).emit("receive-message",data.message);
     })
 
     socket.on("disconnect",()=>{
