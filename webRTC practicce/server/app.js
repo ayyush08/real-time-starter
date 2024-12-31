@@ -46,6 +46,18 @@ io.on('connection', (socket) => {
             
         }
     })
+
+    socket.on('call-received',(data)=>{
+        const {emailId,answer} = data;
+        const from = socketToEmailMap.get(socket.id)
+        const socketId = emailToSocketMap.get(emailId);
+        if(socketId){
+            socket.to(socketId).emit('call-accepted',{
+                from,
+                answer
+            })
+    }})
+
 })
 
 

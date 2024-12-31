@@ -20,7 +20,7 @@ const Home = () => {
         return ()=>{
             socket.off('joined-room',handleJoinedRoom)
         }
-    },[socket,handleJoinRoom])
+    },[socket,handleJoinedRoom])
 
 
 
