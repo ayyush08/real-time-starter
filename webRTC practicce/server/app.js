@@ -1,5 +1,5 @@
 import express from 'express';
-import {Server} from 'socket.io'
+import { Server } from 'socket.io'
 
 
 const app = express();
@@ -13,9 +13,20 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
+const emailToSocketMap = new Map()
 
-io.on('connection',(socket)={
-    
+
+
+io.on('connection', (socket) => {
+    socket.on('join-room', (roomId, emailId) => {
+        console.log('User joined room', roomId,emailId);
+        emailToSocketMap.set(emailId, socket.id)
+        socket.join(roomId)
+        socket.broadcast.to('user-joined', emailId)
+        socket.on('disconnect', () => {
+            socket.to(roomId).broadcast.emit('user-disconnected', emailId)
+        })
+    })
 })
 
 
