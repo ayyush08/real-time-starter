@@ -8,12 +8,11 @@ function App() {
 
   return (
     <div className='app'>
-    <Routes>
       <SocketProvider>
-        
+    <Routes>
     <Route path="/" element={<Home/>} />
-      </SocketProvider>
     </Routes>
+      </SocketProvider>
     </div>
   )
 }
