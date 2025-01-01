@@ -30,16 +30,31 @@ const RoomPage = () => {
 
     const handleIncomingCall = useCallback(async({from,offer})=>{
         console.log('incoming call',from,offer);
+        setRemoteSocketId(from)
+        const stream = await navigator.mediaDevices.getUserMedia({
+            audio:true,
+            video:true
+        })
+        setMyStream(stream)
+        const answer = await peer.getAnswer(offer)
+        socket.emit('call-received',{to:from,answer})
+    },[socket])
+
+
+    const handleCallReceived = useCallback(({from,answer})=>{
+        peer.setLocalDescription(answer)
+        console.log('Call received from',from);
         
     },[])
-
 
     useEffect(() => { 
         socket.on('user-joined',handleUserJoined)
         socket.on('incoming-call',handleIncomingCall)
+        socket.on('call-accepted',handleCallReceived)
         return ()=>{
             socket.off('user-joined',handleUserJoined)
             socket.off('incoming-call',handleIncomingCall)
+            socket.off('call-accepted',handleCallReceived)
         }
     }, [socket,handleUserJoined])
 

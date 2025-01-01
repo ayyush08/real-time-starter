@@ -29,4 +29,10 @@ io.on('connection',(socket)=>{
         })
     })
 
+    socket.on('call-received',({to,answer})=>{
+        io.to(to).emit('call-accepted',{
+            from:socket.id,
+            answer
+        })
+    })
 })
