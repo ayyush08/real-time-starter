@@ -3,10 +3,20 @@ import {
 } from 'socket.io'
 
 const socketPort = 8001
-const io = new Server(socketPort)
+const io = new Server(socketPort,{
+    cors:true
+})
 
+
+const emailToSocketIdMap = new Map()
+const socketIdToEmailMap  = new Map()
 
 io.on('connection',(socket)=>{
     console.log('socket connected',socket.id);
-    
+    socket.on('join-room',(data)=>{
+        const {email,room} = data;
+        emailToSocketIdMap.set(email,socket.id)
+        socketIdToEmailMap.set(socket.id,email);
+        io.to(socket.id).emit('join-room',data)
+    })
 })
