@@ -10,14 +10,7 @@ function App() {
 
   return (
     <div className='app'>
-      <SocketProvider>
-        <PeerProvider>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/room/:roomId" element={<Room />} />
-          </Routes>
-        </PeerProvider>
-      </SocketProvider>
+      
     </div>
   )
 }
