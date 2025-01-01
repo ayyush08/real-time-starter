@@ -35,4 +35,16 @@ io.on('connection',(socket)=>{
             answer
         })
     })
+
+    socket.on('peer-negotiation-needed',({offer,to})=>{
+        io.to(to).emit('peer-negotiation-request',{
+            from:socket.id,
+            offer
+        })
+    })
+
+
+    socket.on('peer-negotiated',({to,answer})=>{
+        io.to(to).emit('peer-negotiated-finally',{from:socket.id,answer})
+    })
 })
